@@ -1,5 +1,6 @@
 import { createContext, useContext, ReactNode, useState } from "react";
 import Cart from "../components/Cart";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 
 type CartProviderProps = {
   children: ReactNode;
@@ -32,7 +33,7 @@ export function useCartContext() {
 
 //4. we must use our created context as provider in main of app
 export function CartProvider({ children }: CartProviderProps) {
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [cartItems, setCartItems] = useLocalStorage<CartItem[]>('shopping-cart',[]);
 
   const cartQty = cartItems.reduce((qty, item) => item.qty + qty, 0);
 
